@@ -1,9 +1,10 @@
 $(function () {
     console.log("readyFB");
+    var appId = '407938939637716';
     function fbAsyncInit() {
         console.log(">fbAsyncInit");
         FB.init({
-            appId: '407938939637716',
+            appId: appId,
             cookie: true, // enable cookies to allow the server to access 
             // the session
             xfbml: true, // parse social plugins on this page
@@ -75,7 +76,7 @@ $(function () {
             $('#status').text('Thanks for logging in, ' + response.email);
         });
     }
-    
+
     function  logIn() {
         console.log(">logIn");
         FB.login(function (response) { // Calling FB.login() results in the JS SDK attempting to open a popup window. 
@@ -85,9 +86,18 @@ $(function () {
             statusChangeCallback(response);
         }, {scope: 'email'});
     }
+
+    function  logInRedirect() {
+        console.log(">logInRedirect");
+        // you can also generate your own state parameter and use it with your login request to provide CSRF protection.
+        var url = "https://www.facebook.com/v2.11/dialog/oauth?client_id=" + appId + "&redirect_uri=http://localhost:8080/test/&state={st=state123abc,ds=123456789}&&response_type=token&scope=email";
+        console.log(">logInRedirect url=" + url);
+        window.location.assign(url);
+    }
     fbAsyncInit();
     $('#facebookLogOutButton').click(logOut);
     $('div.facebookLoginButton').click(logIn);
+    $('#facebookLogInRedirect').click(logInRedirect);
 });
 
 
