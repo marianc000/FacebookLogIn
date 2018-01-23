@@ -3,95 +3,15 @@
     <head>
         <title>Facebook Login JavaScript Example</title>
         <meta charset="UTF-8">
-          <script src="lib/jquery.js"></script>
+        <script src="lib/jquery.js"></script>
+        <link rel="stylesheet" href="css/button2.css">
+        <!--require.js can load it-->
+        <!--<script id="facebook-jssdk" src="https://connect.facebook.net/en_US/sdk.js"></script>-->
+        <script   src="debug.js"></script>
+        <script   src="fb2.js"></script>
     </head>
     <body>
-        <script>
-            // This is called with the results from from FB.getLoginStatus().
-            function statusChangeCallback(response) {
-                console.log('>statusChangeCallback');
-                console.log(JSON.stringify(response));
-                // The response object is returned with a status field that lets the
-                // app know the current login status of the person.
-                // Full docs on the response object can be found in the documentation
-                // for FB.getLoginStatus().
-                if (response.status === 'connected') {
-                    console.log('ok response.status=' + response.status);
-                    // Logged into your app and Facebook.
-                    testAPI();
-                } else {
-                    // The person is not logged into your app or we are unable to tell.
-                    console.log('response.status=' + response.status);
-                }
-            }
 
-            // This function is called when someone finishes with the Login
-            // Button.  See the onlogin handler attached to it in the sample
-            // code below.
-            function checkLoginState() {
-                FB.getLoginStatus(function (response) {
-                    statusChangeCallback(response);
-                });
-            }
-
-            window.fbAsyncInit = function () {
-                FB.init({
-                    appId: '407938939637716',
-                    cookie: true, // enable cookies to allow the server to access 
-                    // the session
-                    xfbml: true, // parse social plugins on this page
-                    version: 'v2.8' // use graph api version 2.8
-                });
-
-                // Now that we've initialized the JavaScript SDK, we call 
-                // FB.getLoginStatus().  This function gets the state of the
-                // person visiting this page and can return one of three states to
-                // the callback you provide.  They can be:
-                //
-                // 1. Logged into your app ('connected')
-                // 2. Logged into Facebook, but not your app ('not_authorized')
-                // 3. Not logged into Facebook and can't tell if they are logged into
-                //    your app or not.
-                //
-                // These three cases are handled in the callback function.
-
-                FB.getLoginStatus(function (response) {
-                    statusChangeCallback(response);
-                });
-
-            };
-
-            // Load the SDK asynchronously
-            (function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id))
-                    return;
-                js = d.createElement(s);
-                js.id = id;
-                //      js.src = "https://connect.facebook.net/en_US/sdk.js";
-                js.src = "debug.js";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-
-            // Here we run a very simple test of the Graph API after login is
-            // successful.  See statusChangeCallback() for when this call is made.
-            function testAPI() {
-                console.log('Welcome!  Fetching your information.... ');
-                FB.api('/me', function (response) {
-                    console.log('Successful login for: ' + response.name);
-                    document.getElementById('status').innerHTML =
-                            'Thanks for logging in, ' + response.name + '!';
-                });
-            }
-
-            function  logOut() {
-                console.log(">logOut");
-                FB.logout(function (response) {
-                    // Person is now logged out
-                    console.log(">loggedOut");
-                });
-            }
-        </script>
 
         <!--
           Below we include the Login Button social plugin. This button uses
@@ -99,11 +19,45 @@
           the FB.login() function when clicked.
         -->
 
-<!--    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>-->
-<div class="fb-login-button" data-max-rows="1" data-size="large"    data-button-type="login_with"  onlogin="checkLoginState"></div>
+        <!--    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>-->
+        <!--<div class="fb-login-button" data-max-rows="1" data-size="large"    data-button-type="login_with"  onlogin="checkLoginState"></div>-->
 
-    <div id="status">
-    </div>
-    <a href="#" onclick="logOut();">Logout</a>
-</body>
+        <!--Once someone has clicked the Login button, and accepted the login dialog — completing the Login flow — your app can now use the Facebook SDK for JavaScript to make API calls on behalf of that person.-->     
+ 
+        
+        <div class="_xvm  facebookLoginButton" >
+            <div class="_5h0c _5h0d" style="" role="button" tabindex="0">
+                <table   cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr  >
+                            <td class="_51m-">
+                                <div class="_5h0j">
+                                    <span class="_5h0k">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 216 216" class="_5h0m" color="#ffffff">
+                                        <path fill="#ffffff" d="
+                                              M204.1 0H11.9C5.3 0 0 5.3 0 11.9v192.2c0 6.6 5.3 11.9 11.9
+                                              11.9h103.5v-83.6H87.2V99.8h28.1v-24c0-27.9 17-43.1 41.9-43.1
+                                              11.9 0 22.2.9 25.2 1.3v29.2h-17.3c-13.5 0-16.2 6.4-16.2
+                                              15.9v20.8h32.3l-4.2 32.6h-28V216h55c6.6 0 11.9-5.3
+                                              11.9-11.9V11.9C216 5.3 210.7 0 204.1 0z">
+                                        </path>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="_51m- _51mw">
+                                <div class="_5h0s">
+                                    <div class="_5h0o">Log in With Facebook</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="status">
+        </div>
+        <a id='facebookLogOutButton' href="#"  >Logout</a>
+    </body>
 </html>

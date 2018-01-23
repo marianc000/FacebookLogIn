@@ -11,11 +11,18 @@
     <head>
         <title>TEST</title>
         <link rel="stylesheet" href="css/styles.css">
-        <script   src="https://apis.google.com/js/api.js" ></script>
         <script src="lib/jquery.js"></script>
-        <script src="my.js"></script>
+        <!--        <script   src="https://apis.google.com/js/api.js" ></script>
+                <script src="google.js"></script>-->
+        <!--The function assigned to window.fbAsyncInit is run as soon as the SDK has completed loading.--> 
+        <script src="facebook.js"></script>
+        <!--require.js can load it-->
+        <script id="facebook-jssdk" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.11&appId=407938939637716"></script>
+
+
     </head> 
     <body> 
+        <div id="fb-root"></div>
         <!--Google standard button-->
         <div style="display:none"><img src="images/btn_google_signin_light_normal_web.png"/></div>
         <input id="clientId" type="hidden" name="clientId" value="<%=CLIENT_ID%>">
@@ -44,5 +51,7 @@
             <p>Your are signed in as: <span class="userEmail"></span></p> 
             <a id="googleSignOut" href="#"  >Sign out</a>
         </div>
+
+        <div class="fb-login-button" data-max-rows="1" data-size="large"    data-button-type="login_with"  onlogin="checkLoginState"></div>
     </body>
 </html>

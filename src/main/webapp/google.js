@@ -1,7 +1,6 @@
 
 $(function () {
     console.log("ready");
-
     var auth2;
     var $signInButton = $('#googleSignIn');
     var $signOutButton = $('#googleSignOut');

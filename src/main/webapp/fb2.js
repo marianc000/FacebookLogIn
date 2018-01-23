@@ -75,6 +75,7 @@ $(function () {
             $('#status').text('Thanks for logging in, ' + response.email);
         });
     }
+    
     function  logIn() {
         console.log(">logIn");
         FB.login(function (response) { // Calling FB.login() results in the JS SDK attempting to open a popup window. 
@@ -82,7 +83,7 @@ $(function () {
             // code.
             console.log(">logIn returned");
             statusChangeCallback(response);
-        });
+        }, {scope: 'email'});
     }
     fbAsyncInit();
     $('#facebookLogOutButton').click(logOut);
