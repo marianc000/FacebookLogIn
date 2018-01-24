@@ -29,7 +29,7 @@ import javax.ws.rs.core.Response;
  * @author mcaikovs
  */
 @Path("/test")
-public class UserResource {
+public class UserResource1 {
 
     @Context
     HttpServletRequest request;
@@ -70,16 +70,18 @@ To enable debug mode, use the debug query string parameter.
 https://graph.facebook.com/v2.11/me?access_token=EAACEdEose0cBAD4gCeEroI6ftQmEi4Itd6bn1GDoQiyaGomXhMXXqgV27NJpON7uaWpfZBil0wzzEUSTl878oAUohpk9LC1ATu37ZC7WToB66MZC0lD9Q3h27uyhKlsQ2tZAhyuZCzZBxVe7cZAVfVqZCcK0rcrFfn4WrsUDGHbApJQjZCoZB6nvHb6mBntqdPY58ZD&debug=all&fields=email&format=json&method=get&pretty=0&suppress_http_code=1
 
      */
-    String readUserEmailFromGraphAPI(String token) throws IOException {
-        try (JsonReader jsonReader = Json.createReader(getURLInputStream(token))) {
-            JsonObject obj = jsonReader.readObject();
-            System.out.println("<readGraphAPI: " + obj.toString());
-            return obj.getString("email");
-        }
+String readUserEmailFromGraphAPI(String token) throws IOException {
+    try (JsonReader jsonReader = Json.createReader(
+            new InputStreamReader(
+                    new URL("https://graph.facebook.com/v2.11/me?access_token=" + token + "&debug=all&fields=email&format=json&method=get&pretty=0")
+                            .openStream()))) {
+        JsonObject obj = jsonReader.readObject();
+        return obj.getString("email");
     }
+}
 
     Reader getURLInputStream(String token) throws IOException {
-        return new InputStreamReader(getGraphAPIURL(token).openStream());
+        return ;
     }
 
     URL getGraphAPIURL(String token) throws MalformedURLException {

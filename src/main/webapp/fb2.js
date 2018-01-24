@@ -1,8 +1,19 @@
 $(function () {
     console.log("readyFB");
-    var appId = '407938939637716';
+   
     console.log("location.hash=" + location.hash);
+
+    var $signInButton = $('#facebookLogInRedirect');
+    var $signOutButton = $('#facebookLogOutRedirectButton');
+    var $authenticatedControls = $('div.authenticated');
+    var $userEmailSpan = $authenticatedControls.find(".userEmail");
+    var appId = $('input#appId').val();
+    $signInButton.click(onClickLogInRedirect);
+    $signOutButton.click(onClickLogOutRedirect);
+
+
     checkHash();
+
     function checkHash() {
         console.log(">checkHash");
         var response = checkAndProcessHash();
@@ -127,18 +138,58 @@ $(function () {
         }, {scope: 'email'});
     }
 
-    function  logInRedirect() {
-        console.log(">logInRedirect");
+    function  onClickLogInRedirect() {
+        console.log(">onClickLogInRedirect");
         // you can also generate your own state parameter and use it with your login request to provide CSRF protection.
         var url = "https://www.facebook.com/v2.11/dialog/oauth?client_id=" + appId + "&redirect_uri=http://localhost:8080/test/&state={st=state123abc,ds=123456789}&&response_type=token&scope=email";
         console.log(">logInRedirect url=" + url);
         window.location.assign(url);
     }
+
+    function onClickLogOutRedirect() {
+        console.log('>onClickLogOutRedirect');
+        //You can log people out of your app by undoing whatever login status indicator you added, for example deleting the session that indicates a person is logged in.
+        $.ajax({
+            method: "POST",
+            url: "api/test/logout",
+        })
+                .done(function (data) {
+                    console.log(">received data from server: " + JSON.stringify(data));
+                    showSignedOutUserControls();
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.log("error: " + textStatus);
+        });
+    }
+
+    function showSignedInUserControls(email) {
+        console.log('>showSignedInUserControls: email=' + email);
+        $signInButton.hide();
+        $userEmailSpan.text(email);
+        $authenticatedControls.show();
+    }
+    function onSignIntoBackEnd(email) {
+        console.log('>onSignIntoBackEnd: email=' + email);
+        showSignedInUserControls(email);
+    }
+
+    function showSignedOutUserControls() {
+        console.log('>showSignedOutUserControls');
+        $signInButton.show();
+        $authenticatedControls.hide();
+    }
+
     fbAsyncInit();
     $('#facebookLogOutButton').click(logOut);
     $('div.facebookLoginButton').click(logIn);
-    $('#facebookLogInRedirect').click(logInRedirect);
+
 });
+
+ 
+
+
+
+
+
 
 
 
