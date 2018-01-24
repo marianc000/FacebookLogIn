@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package folder;
 
 import folder.hash.Sha256Digest;
@@ -11,7 +6,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.MalformedURLException;
@@ -42,7 +36,8 @@ public class UserResource {
         request.getSession().invalidate();
         return Response.ok("Logged out").build();
     }
-
+// Moving tokens between your client and server must be done securely over HTTPS to ensure the security of people's accounts. 
+    
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     public User getUser(String token) throws GeneralSecurityException, IOException {
@@ -106,7 +101,6 @@ https://graph.facebook.com/v2.11/me?access_token=EAACEdEose0cBAD4gCeEroI6ftQmEi4
         } else {
             return "";
         }
-
     }
     /*
    Access tokens are portable. Graph API calls can be made from clients or from your server on behalf of clients. Calls from a server can be better secured by adding a parameter called appsecret_proof.

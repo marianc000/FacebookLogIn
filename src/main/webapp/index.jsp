@@ -4,24 +4,22 @@
     Author     : mcaikovs
 --%>
 
-<%@page import="static folder.Constants.APP_ID"%>
+<%@page import="static folder.Constants.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>TEST</title>
-        <link rel="stylesheet" href="css/button2.css">
+        <link rel="stylesheet" href="css/buttonOnly.css">
         <script src="lib/jquery.js"></script>
-        <script   src="debug.js"></script>
-        <script   src="fb2.js"></script>
+        <script   src="facebook.js"></script>
     </head> 
-    <body> 
+    <body>  
         <div id="fb-root"></div>
         <!--Google standard button-->
-        <div style="display:none"><img src="images/btn_google_signin_light_normal_web.png"/></div>
-        <input id="appId" type="hidden" name="clientId" value="<%=APP_ID%>">
+ <input id="appId" type="hidden"   value="<%=APP_ID%>">
         <!-- In the callback, you would hide the gSignInWrapper element on a successful sign in -->
-        <div id="facebookLoginButton" class="_xvm  facebookLoginButton" style="display:none">
+        <div id="facebookLoginButton" class="_xvm  facebookLoginButton"  >
             <div class="_5h0c _5h0d" style="" role="button" tabindex="0">
                 <table   cellspacing="0" cellpadding="0">
                     <tbody>
@@ -51,7 +49,7 @@
                 </table>
             </div>
         </div>
-        <a id='facebookLogInRedirect' href="#"  >Login Redirect</a>
+
         <div class="authenticated" style="display:none">
             <p>Your are signed in as: <span class="userEmail"></span></p> 
             <a id='facebookLogOutButton' href="#" style="display:none" >Logout</a>

@@ -46,5 +46,4 @@ public class Sha256Digest {
     public static void main(String[] args) throws Exception {
         System.out.println(new Sha256Digest().hash("Test"));
     }
-
 }

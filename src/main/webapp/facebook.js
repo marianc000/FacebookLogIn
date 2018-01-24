@@ -1,7 +1,7 @@
 $(function () {
-     console.log("location.hash=" + location.hash);
+    console.log("location.hash=" + location.hash);
 
-    var $signInButton = $('#facebookLogInRedirect');
+    var $signInButton = $('#facebookLoginButton');
     var $signOutButton = $('#facebookLogOutRedirectButton');
     var $authenticatedControls = $('div.authenticated');
     var $userEmailSpan = $authenticatedControls.find(".userEmail");
@@ -50,11 +50,11 @@ $(function () {
             console.log("error: " + textStatus);
         });
     }
- 
+
     function  onClickLogInRedirect() {
         console.log(">onClickLogInRedirect");
         // you can also generate your own state parameter and use it with your login request to provide CSRF protection.
-        var url = "https://www.facebook.com/v2.11/dialog/oauth?client_id=" + appId + "&redirect_uri=http://localhost:8080/test/&state={st=state123abc,ds=123456789}&&response_type=token&scope=email";
+        var url = "https://www.facebook.com/v2.11/dialog/oauth?client_id=" + appId + "&redirect_uri=http://localhost:8080/test/&response_type=token&scope=email";
         console.log(">logInRedirect url=" + url);
         window.location.assign(url);
     }
@@ -90,14 +90,9 @@ $(function () {
         $signInButton.show();
         $authenticatedControls.hide();
     }
-
-    fbAsyncInit();
-    $('#facebookLogOutButton').click(logOut);
-    $('div.facebookLoginButton').click(logIn);
-
 });
 
- 
+
 
 
 
