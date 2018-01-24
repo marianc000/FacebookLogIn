@@ -5,6 +5,7 @@
  */
 package folder;
 
+import folder.hash.Sha256Digest;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -44,7 +45,7 @@ public class UserResource {
 
     @POST
     @Produces({MediaType.APPLICATION_JSON})
-    public User getToken(String token) throws GeneralSecurityException, IOException {
+    public User getUser(String token) throws GeneralSecurityException, IOException {
         System.out.println(">getToken: " + token);
         return new User(checkAndGetEmail(token));
     }
@@ -83,8 +84,31 @@ https://graph.facebook.com/v2.11/me?access_token=EAACEdEose0cBAD4gCeEroI6ftQmEi4
     }
 
     URL getGraphAPIURL(String token) throws MalformedURLException {
-        URL url = new URL("https://graph.facebook.com/v2.11/me?access_token=" + token + "&debug=all&fields=email&format=json&method=get&pretty=0");
+
+        URL url = new URL("https://graph.facebook.com/v2.11/me?access_token=" + token + "&debug=all&fields=email&format=json&method=get&pretty=0"+getAppSecretProof( token));
         System.out.println("url=" + url);
         return url;
     }
+/*
+    In the Advanced section of your app's settings, you can require use of appsecret_proof. When this is enabled, we will only allow API calls that either include appsecret_proof or are made from the same device the token was issued to.
+    
+    
+    */
+    String getAppSecretProof(String token) {
+        String proof = null;
+        try {
+            proof = Sha256Digest.hashToken(token);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        if (proof != null) {
+            return "&appsecret_proof=" + proof;
+        } else {
+            return "";
+        }
+
+    }
+    /*
+   Access tokens are portable. Graph API calls can be made from clients or from your server on behalf of clients. Calls from a server can be better secured by adding a parameter called appsecret_proof.
+     */
 }
