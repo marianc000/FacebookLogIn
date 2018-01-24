@@ -1,6 +1,46 @@
 $(function () {
     console.log("readyFB");
     var appId = '407938939637716';
+    console.log("location.hash=" + location.hash);
+    checkHash();
+    function checkHash() {
+        console.log(">checkHash");
+        var response = checkAndProcessHash();
+        if (response) {
+            signIntoBackEnd(response.access_token);
+        }
+    }
+    function checkAndProcessHash() {
+        console.log(">checkAndProcessHash");
+        var hash = location.hash;
+        if (!hash)
+            return;
+        hash = hash.substring(1);
+        var hashValues = {};
+        var params = hash.split('&');
+        params.forEach(function (val) {
+            var pair = val.split('=');
+            hashValues[pair[0]] = pair[1];
+        })
+        console.log("<checkHash: " + JSON.stringify(hashValues));
+        return hashValues;
+    }
+    // in general if you're building a web app, it is best to add the token as a session variable to identify that browser session with a particular person
+    function signIntoBackEnd(accesToken) {
+        console.log(">signIntoBackEnd: " + accesToken);
+        $.ajax({
+            method: "POST",
+            url: "api/test",
+            data: accesToken,
+            dataType: "json"
+        })
+                .done(function (data) {
+                    console.log(">received data from server: " + JSON.stringify(data));
+                    onSignIntoBackEnd(data.email);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.log("error: " + textStatus);
+        });
+    }
     function fbAsyncInit() {
         console.log(">fbAsyncInit");
         FB.init({

@@ -24,6 +24,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
@@ -44,8 +47,8 @@ public class UserResource {
     String checkAndGetEmail(String token) throws GeneralSecurityException, IOException {
         System.out.println(">checkAndGetEmail: " + token);
         try {
-            readGraphAPI(token);
-            return "test@test.tt";
+            return readGraphAPI(token);
+
         } catch (IOException ex) {
             throw new WebApplicationException("Invalid token", ex, Response.Status.FORBIDDEN);
         }
@@ -66,14 +69,10 @@ https://graph.facebook.com/v2.11/me?access_token=EAACEdEose0cBAD4gCeEroI6ftQmEi4
         System.out.println(">readGraphAPI: " + token);
         URL url = new URL(getGraphAPIURL(token));
         System.out.println(">readGraphAPI url: " + url);
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()))) {
-            String inputLine, response = "";
-            while ((inputLine = in.readLine()) != null) {
-                System.out.println(inputLine);
-            }
-            response += inputLine;
-            System.out.println("<readGraphAPI: " + response);
-            return response;
+        try (JsonReader jsonReader = Json.createReader(new InputStreamReader(url.openStream()))) {
+            JsonObject obj = jsonReader.readObject();
+            System.out.println("<readGraphAPI: " + obj.toString());
+            return obj.getString("email");
         }
     }
 
