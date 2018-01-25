@@ -15,15 +15,19 @@ $(function () {
     function checkHash() {
         console.log(">checkHash");
         var response = checkAndProcessHash();
-        if (response) {
+        if (response && response.access_token) {
             signIntoBackEnd(response.access_token);
         }
+    }
+    function removeHash() {
+        history.replaceState(null, document.title, location.href.substr(0, location.href.length - location.hash.length));
     }
     function checkAndProcessHash() {
         console.log(">checkAndProcessHash");
         var hash = location.hash;
         if (!hash)
             return;
+    //     removeHash(); // disabled for screenshot
         hash = hash.substring(1);
         var hashValues = {};
         var params = hash.split('&');
