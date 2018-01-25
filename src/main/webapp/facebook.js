@@ -27,7 +27,7 @@ $(function () {
         var hash = location.hash;
         if (!hash)
             return;
-    //     removeHash(); // disabled for screenshot
+      removeHash(); // disabled for screenshot
         hash = hash.substring(1);
         var hashValues = {};
         var params = hash.split('&');
