@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package folder.hash;
+package login.hash;
 
-import static folder.Constants.APP_SECRET;
+ 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
+import static login.Constants.APP_SECRET;
 
 /**
  *

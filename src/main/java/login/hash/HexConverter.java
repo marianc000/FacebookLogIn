@@ -1,4 +1,4 @@
-package folder.hash;
+package login.hash;
 
 public class HexConverter {
 
