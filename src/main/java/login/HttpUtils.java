@@ -23,20 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author mcaikovs
  */
 public class HttpUtils {
-
-    public InputStream post(String url, String params) throws IOException {
-        System.out.println("post: url=" + url);
-        System.out.println("post: " + params);
-        URL u = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) u.openConnection();
-        con.setRequestMethod("POST");
-        con.setDoOutput(true);
-        try (OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream())) {
-            out.write(params);
-        }
-
-        return con.getInputStream();
-    }
+ 
 
     public String getFullContextPath(HttpServletRequest request) {
         String fullUrl = request.getRequestURL().toString();
